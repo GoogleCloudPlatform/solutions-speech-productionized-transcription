@@ -51,21 +51,20 @@ var (
 	audioQueue         = flag.String("audioQueue", "liveq", "Redis key for input audio data")
 	transcriptionQueue = flag.String("transcriptionQueue", "transcriptions", "Redis key for output transcriptions")
 	recoveryQueue      = flag.String("recoveryQueue", "recoverq", "Redis key for recent audio data used for recovery")
-	recoveryRetainSecs = flag.Int("recoveryRetainLast", 4, "Retain the last N seconds of audio, replayed during recovery")
-	recoveryTimeout    = flag.Duration("recoveryExpiry", 30, "Expire data in recovery queue after this time (seconds)")
-	flushTimeout       = flag.Duration("flushTimeout", 3000, "Emit any pending transcriptions after this time (millis)")
+	recoveryRetain     = flag.Duration("recoveryRetainLast", 3*time.Second, "Retain this duration of audio, replayed during recovery")
+	recoveryExpiry     = flag.Duration("recoveryExpiry", 30*time.Second, "Expire data in recovery queue after this time")
+	flushTimeout       = flag.Duration("flushTimeout", 3000*time.Millisecond, "Emit any pending transcriptions after this time")
 	pendingWordCount   = flag.Int("pendingWordCount", 4, "Treat last N transcribed words as pending")
 	sampleRate         = flag.Int("sampleRate", 16000, "Sample rate (Hz)")
 	channels           = flag.Int("channels", 1, "Number of audio channels")
 	lang               = flag.String("lang", "en-US", "Transcription language code")
 	phrases            = flag.String("phrases", "", "Comma-separated list of phrase hints for Speech API. Phrases with spaces should be quoted")
 
-	redisClient      *redis.Client
-	recoveryExpiry   = *recoveryTimeout * time.Second
-	recoveryRetain   = int64(*recoveryRetainSecs * 10) // each audio element ~100ms
-	latestTranscript string
-	lastIndex        = 0
-	pending          []string
+	redisClient        *redis.Client
+	recoveryRetainSize = int64(*recoveryRetain / (100 * time.Millisecond)) // each audio element ~100ms
+	latestTranscript   string
+	lastIndex          = 0
+	pending            []string
 )
 
 func main() {
@@ -210,8 +209,8 @@ func sendAudio(ctx context.Context, speechClient *speech.Client, config speechpb
 			}
 			// Temporarily retain the last few seconds of recent audio
 			if err == nil {
-				redisClient.LTrim(*recoveryQueue, 0, recoveryRetain)
-				redisClient.Expire(*recoveryQueue, recoveryExpiry)
+				redisClient.LTrim(*recoveryQueue, 0, recoveryRetainSize)
+				redisClient.Expire(*recoveryQueue, *recoveryExpiry)
 			}
 		}
 		if err != nil && err != redis.Nil {
@@ -251,8 +250,7 @@ func receiveResponses(stream speechpb.Speech_StreamingRecognizeClient, receiveCh
 	defer close(receiveChan)
 
 	// If no results received from Speech for some period, emit any pending transcriptions
-	timeout := *flushTimeout * time.Millisecond
-	timer := time.NewTimer(timeout)
+	timer := time.NewTimer(*flushTimeout)
 	go func() {
 		<-timer.C
 		flush()
@@ -284,7 +282,7 @@ func receiveResponses(stream speechpb.Speech_StreamingRecognizeClient, receiveCh
 			return
 		}
 		// Ok, we have a valid response from Speech.
-		timer.Reset(timeout)
+		timer.Reset(*flushTimeout)
 		processResponses(*resp)
 	}
 }

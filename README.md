@@ -8,6 +8,6 @@ Refer to the tutorial below for full details and instructions.
 
 https://cloud.google.com/solutions/media-entertainment/architecture-for-production-ready-live-transcription-tutorial
 
-###Disclaimer
+### Disclaimer
 This is not an official Google product.
  
