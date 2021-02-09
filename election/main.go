@@ -141,12 +141,12 @@ func main() {
 			},
 			OnStoppedLeading: func() {
 				// This pod stopped leading! Notify listener
+				// Note, not closing response here as other container may already be stopped
 				klog.Infof("Notifying %s stopped leading", *id)
-				resp, err := http.Get(stopURL)
+				_, err := http.Get(stopURL)
 				if err != nil && ctx.Err() == nil {
 					klog.Errorf("Failed to notify leader of stop: %v", err)
 				}
-				defer resp.Body.Close()
 			},
 			OnNewLeader: func(identity string) {
 				// The leader has changed

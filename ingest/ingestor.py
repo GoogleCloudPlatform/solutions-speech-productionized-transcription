@@ -31,10 +31,11 @@ parser.add_argument('--port', default=8080)
 parser.add_argument('--redisHost', required=True)
 parser.add_argument('--redisQueue', default='liveq')
 parser.add_argument('--id', default='Ingest')
+parser.add_argument('--maxPackets', type=int, default=500)
 args = parser.parse_args()
 
 app = Flask(__name__)
-Payload.max_decode_packets = 50
+Payload.max_decode_packets = args.maxPackets
 socketio = SocketIO()
 rdb = redis.Redis(host=args.redisHost, port=6379, db=0,
                   health_check_interval=2, socket_timeout=3)

@@ -14,6 +14,7 @@
 
 import argparse
 from datetime import datetime
+import time
 import wave
 
 import eventlet
@@ -29,15 +30,21 @@ args = parser.parse_args()
 sio = socketio.Client(reconnection_delay=1, reconnection_delay_max=1,
                       randomization_factor=0, logger=False)
 
+connected = False
 
 @sio.event
 def connect():
     print('Socket connected at %s' % datetime.utcnow())
+    global connected
+    if not connected:
+        connected = True
 
 
 @sio.event
 def disconnect():
     print('Socket disconnected at %s' % datetime.utcnow())
+    global connected
+    connected = False
 
 
 @sio.on('pod_id')
@@ -53,7 +60,7 @@ def stream_file(filename):
     data = wf.readframes(chunk)
     while True:
         try:
-            while sio.connected:
+            while connected:
                 if data != '' and len(data) != 0:
                     sio.emit('data', data)
                     # sleep for the duration of the audio chunk
