@@ -18,3 +18,4 @@ target/
 *.pyc
 
 obsolete/
+tmp/
