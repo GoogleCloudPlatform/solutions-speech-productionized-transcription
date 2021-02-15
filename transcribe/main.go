@@ -36,9 +36,9 @@ import (
 	"syscall"
 	"time"
 
-	speech "cloud.google.com/go/speech/apiv1p1beta1"
+	speech "cloud.google.com/go/speech/apiv1"
 	redis "github.com/go-redis/redis/v7"
-	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1p1beta1"
+	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"k8s.io/klog"
