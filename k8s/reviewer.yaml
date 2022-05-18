@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: reviewer
-          image: gcr.io/myproject/reviewer:latest
+          image: gcr.io/speechtotext-350601/reviewer:latest
           imagePullPolicy: Always
           env:
             - name: PODNAME
@@ -36,7 +36,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
           args:
-            - --redisHost=1.2.3.4
+            - --redisHost=10.219.189.3
             - --host=0.0.0.0
             - --id=$(PODNAME)
           ports:

@@ -28,14 +28,14 @@ spec:
     spec:
       containers:
         - name: ingestor
-          image: gcr.io/myproject/ingestor:latest
+          image: gcr.io/speechtotext-350601/ingestor:latest
           env:
             - name: PODNAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
           args:
-            - --redisHost=1.2.3.4
+            - --redisHost=10.219.189.3
             - --host=0.0.0.0
             - --port=8080
             - --id=$(PODNAME)
