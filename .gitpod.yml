@@ -3,10 +3,10 @@ tasks:
       command: yarn build
     - name: gcp cli install
       init: |
-              curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-370.0.0-linux-x86_64.tar.gz  > /tmp/google-cloud-sdk.tar.gz
-              sudo mkdir -p /usr/local/gcloud
-              sudo tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz
-              yes | sudo /usr/local/gcloud/google-cloud-sdk/install.sh
+        curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-370.0.0-linux-x86_64.tar.gz  > /tmp/google-cloud-sdk.tar.gz
+        sudo mkdir -p /usr/local/gcloud
+        sudo tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz
+        yes | sudo /usr/local/gcloud/google-cloud-sdk/install.sh
       command: export PATH=$PATH:/usr/local/gcloud/google-cloud-sdk/bin
 ports:
 - port: 8000
