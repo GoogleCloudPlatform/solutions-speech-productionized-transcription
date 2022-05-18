@@ -2,7 +2,7 @@ tasks:
     - init: yarn install
       command: yarn build
     - name: gcp cli install
-      init: |
+      before: |
         curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-370.0.0-linux-x86_64.tar.gz  > /workspace/google-cloud-sdk.tar.gz
         sudo mkdir -p /usr/local/gcloud
         sudo tar -C /usr/local/gcloud -xvf /workspace/google-cloud-sdk.tar.gz
