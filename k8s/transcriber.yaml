@@ -20,7 +20,7 @@ metadata:
     app: leader-election
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: leader-election
@@ -32,7 +32,7 @@ rules:
     verbs: ["*"]
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: leader-election
@@ -65,7 +65,7 @@ spec:
       serviceAccountName: leader-election
       containers:
         - name: transcriber
-          image: gcr.io/speechtotext-350601/transcriber:latest
+          image: gcr.io/development-342711/transcriber:latest
           imagePullPolicy: Always
           env:
             - name: PODNAME
@@ -73,12 +73,12 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
           args:
-            - --redisHost=10.219.189.3
+            - --redisHost=redis
             - --sampleRate=44100
             - --channels=1
             - --lang=en-US
         - name: leader-election
-          image: gcr.io/speechtotext-350601/leader-election:latest
+          image: gcr.io/development-342711/leader-election:latest
           imagePullPolicy: Always
           env:
             - name: PODNAME
