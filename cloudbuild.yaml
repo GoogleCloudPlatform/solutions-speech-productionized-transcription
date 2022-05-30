@@ -14,24 +14,23 @@
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/ingestor', './ingest' ]
-    waitFor: ['-']
+    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/ingest', './ingest' ]
+      #    waitFor: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/election', './election' ]
+      #    waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/leader-election', './election' ]
-    waitFor: ['-']
+    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/transcribe', './transcribe' ]
+      #    waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/transcriber', './transcribe' ]
-    waitFor: ['-']
-
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/reviewer', './reviewer' ]
-    waitFor: ['-']
+    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/reviewer', './reviewer' ]
+      #    waitFor: ['-']
 
 images: [
-  'gcr.io/$PROJECT_ID/ingestor',
-  'gcr.io/$PROJECT_ID/leader-election',
-  'gcr.io/$PROJECT_ID/transcriber',
-  'gcr.io/$PROJECT_ID/reviewer'
+  'asia-northeast1-docker.pkg.dev/$PROJECT_ID/ingest',
+  'asia-northeast1-docker.pkg.dev/$PROJECT_ID/election',
+  'asia-northeast1-docker.pkg.dev/$PROJECT_ID/transcribe',
+  'asia-northeast1-docker.pkg.dev/$PROJECT_ID/reviewer'
 ]

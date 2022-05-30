@@ -65,8 +65,8 @@ spec:
       serviceAccountName: leader-election
       containers:
         - name: transcriber
-          image: gcr.io/development-342711/transcriber:latest
-          imagePullPolicy: Always
+          image: asia-northeast1-docker.pkg.dev/development-342711/transcribe:latest
+          imagePullPolicy: IfNotPresent
           env:
             - name: PODNAME
               valueFrom:
@@ -78,8 +78,8 @@ spec:
             - --channels=1
             - --lang=en-US
         - name: leader-election
-          image: gcr.io/development-342711/leader-election:latest
-          imagePullPolicy: Always
+          image: asia-northeast1-docker.pkg.dev/development-342711/election:latest
+          imagePullPolicy: IfNotPresent
           env:
             - name: PODNAME
               valueFrom:

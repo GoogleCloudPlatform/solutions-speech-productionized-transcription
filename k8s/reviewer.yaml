@@ -28,8 +28,8 @@ spec:
     spec:
       containers:
         - name: reviewer
-          image: gcr.io/development-342711/reviewer:latest
-          imagePullPolicy: Always
+          image: asia-northeast1-docker.pkg.dev/development-342711/reviewer:latest
+          imagePullPolicy: IfNotPresent
           env:
             - name: PODNAME
               valueFrom:
