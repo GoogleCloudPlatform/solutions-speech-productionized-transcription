@@ -29,6 +29,7 @@ spec:
       containers:
         - name: ingestor
           image: asia-northeast1-docker.pkg.dev/development-342711/ingest:latest
+          imagePullPolicy: IfNotPresent
           env:
             - name: PODNAME
               valueFrom:
