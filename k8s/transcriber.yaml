@@ -72,11 +72,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/gcp/texttospeach@development-342711.iam.gserviceaccount.com"
           args:
             - --redisHost=redis
             - --sampleRate=44100
             - --channels=1
             - --lang=en-US
+          volumeMounts:
+              - name: gcp
+                mountPath: "/etc/gcp"
+                readOnly: true
         - name: leader-election
           image: asia-northeast1-docker.pkg.dev/development-342711/election:latest
           imagePullPolicy: IfNotPresent
@@ -89,3 +95,8 @@ spec:
             - --lockName=transcriber-lock
             - --lockNamespace=default
             - --id=$(PODNAME)
+      volumes:
+        - name: gcp
+          hostPath:
+            path: /Users/fsuke1985/.gcp/credentials
+            type: Directory
