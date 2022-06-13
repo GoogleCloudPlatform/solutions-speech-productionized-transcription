@@ -31,7 +31,7 @@
 				"golang.Go",
 				"ms-azuretools.vscode-docker",
 				"golang.go",
-				"ms-kubernetes-tools.vscode-kubernetes-tools"
+				"ms-kubernetes-tools.vscode-kubernetes-tools@1.2.4"
 			]
 		}
 	},
