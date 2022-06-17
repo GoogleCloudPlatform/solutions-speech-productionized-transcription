@@ -21,6 +21,9 @@ spec:
               memory: 100Mi
           ports:
           - containerPort: 6379
+          env:
+            - name: REDIS_ARGS
+              value: "--requirepass ''"
 
 # 
 # Services define
