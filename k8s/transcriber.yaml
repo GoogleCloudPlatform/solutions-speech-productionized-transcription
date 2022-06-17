@@ -56,7 +56,7 @@ spec:
   selector:
     matchLabels:
       app: transcriber
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -75,7 +75,7 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/gcp/texttospeach@development-342711.iam.gserviceaccount.com"
           args:
-            - --redisHost=redis
+            - --redisHost=redis-master
             - --sampleRate=44100
             - --channels=1
             - --lang=en-US
