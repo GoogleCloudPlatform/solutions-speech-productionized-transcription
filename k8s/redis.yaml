@@ -23,7 +23,7 @@ spec:
           - containerPort: 6379
           env:
             - name: REDIS_ARGS
-              value: "--requirepass ''"
+              value: "--requirepass 'redis'"
 
 # 
 # Services define

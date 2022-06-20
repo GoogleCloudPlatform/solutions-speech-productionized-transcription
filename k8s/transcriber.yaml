@@ -79,6 +79,7 @@ spec:
             - --sampleRate=44100
             - --channels=1
             - --lang=en-US
+            - --electionPort=0
           volumeMounts:
               - name: gcp
                 mountPath: "/etc/gcp"
