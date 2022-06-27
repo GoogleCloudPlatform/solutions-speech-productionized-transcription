@@ -1,86 +1,62 @@
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.236.0/containers/kubernetes-helm-minikube
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.236.0/containers/go
 {
-	"name": "Kubernetes - Minikube-in-Docker",
-	"dockerFile": "Dockerfile",
-	"runArgs": ["--privileged"],
-	"mounts": [
-		"source=minikube-var-lib-docker,target=/var/lib/docker,type=volume",
-		"source=minikube-config,target=/home/vscode/.minikube,type=volume",
-	],
-	"overrideCommand": false,
-{
-	"name": "Go",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			// Update the VARIANT arg to pick a version of Go: 1, 1.18, 1.17
-			// Append -bullseye or -buster to pin to an OS version.
-			// Use -bullseye variants on local arm64/Apple Silicon.
-			"VARIANT": "1-bullseye",
-			// Options
-			"NODE_VERSION": "lts/*"
-		}
-	},
-	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+  "name": "Go",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      // Update the VARIANT arg to pick a version of Go: 1, 1.18, 1.17
+      // Append -bullseye or -buster to pin to an OS version.
+      // Use -bullseye variants on local arm64/Apple Silicon.
+      "VARIANT": "1-bullseye",
+      // Options
+      "NODE_VERSION": "lts/*"
+    }
+  },
+  "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
 
-	// Configure tool-specific properties.
-	"customizations": {
-		// Configure properties specific to VS Code.
-		"vscode": {
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"ms-azuretools.vscode-docker",
-				"ms-kubernetes-tools.vscode-kubernetes-tools"
-			// Set *default* container specific settings.json values on container create.
-			"settings": { 
-				"go.toolsManagement.checkForUpdates": "local",
-				"go.useLanguageServer": true,
-				"go.gopath": "/go"
-			},
-			
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"golang.Go"
-			]
-		}
-	},
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/go"
+      },
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": ["golang.Go"]
+    }
+  },
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "kubectl version",
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
 
-	// Use 'postStartCommand' to run commands after the container is created like starting minikube.
-	// "postStartCommand": "nohup bash -c 'minikube start &' > minikube.log 2>&1",
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "go version",
 
-	// Minikube does not like running as root, so use a non-root user.
-	"remoteUser": "vscode",
-	"features": {
-		"kubectl-helm-minikube": "latest",
-		"golang": "latest"
-	// "postCreateCommand": "go version",
-
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
-	"features": {
-		"docker-in-docker": "latest",
-		"docker-from-docker": "latest",
-		"kubectl-helm-minikube": "latest",
-		"terraform": "latest",
-		"git": "latest",
-		"git-lfs": "latest",
-		"github-cli": "latest",
-		"sshd": "latest",
-		"desktop-lite": "latest",
-		"homebrew": "latest",
-		"fish": "latest",
-		"python": "latest",
-		"java": "lts",
-		"maven": "latest",
-		"gradle": "latest",
-		"ruby": "latest",
-		"rust": "latest",
-		"dotnet": "latest"
-	}
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode",
+  "features": {
+    "docker-in-docker": "latest",
+    "docker-from-docker": "latest",
+    "kubectl-helm-minikube": "latest",
+    "terraform": "latest",
+    "git": "latest",
+    "git-lfs": "latest",
+    "github-cli": "latest",
+    "sshd": "latest",
+    "desktop-lite": "latest",
+    "homebrew": "latest",
+    "fish": "latest",
+    "python": "latest",
+    "java": "lts",
+    "maven": "latest",
+    "gradle": "latest",
+    "ruby": "latest",
+    "rust": "latest",
+    "dotnet": "latest"
+  }
 }
