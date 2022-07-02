@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------------------------------------
 FROM mcr.microsoft.com/oryx/build:vso-focal-20220429.1 as kitchensink
 
-ARG USERNAME=vscode
+ARG USERNAME=codespace
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG HOMEDIR=/home/$USERNAME
